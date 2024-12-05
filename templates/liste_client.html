@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Clients</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+          .navbar {
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+            .navbar a {
+                color: white !important;
+            }
+            .icon-white {
+        fill: white;
+    }
+    .icon-black {
+        fill: rgb(22, 21, 21);
+    }
+       
+    </style>
+</head>
+<body class="bg-light">
+    <!-- En-tête de la page -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+     
+        <div class="container">
+           
+           
+
+            <a class="navbar-brand" href="#">Projet Cloud aicha frih</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="bi bi-arrow-left-circle-fill icon-white me-1" viewBox="0 0 16 16">
+                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                        </svg>
+                        <a class="nav-link p-0" href="/">Retour à l'accueil</a>
+                    </li>
+                    &nbsp;&nbsp;
+                    <li class="nav-item">
+                        <a class="nav-link" href="/liste_regions">Liste des Régions</a>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br><br><br><br><br>
+
+    <!-- Contenu principal -->
+  
+    <div class="container">
+
+
+
+
+     
+
+
+        <!-- Section de recherche -->
+        <div class="search-section mb-4 w-60">
+            <form class="row g-3" method="GET" action="{{ url_for('list_clients') }}">
+                <div class="col-md-2">
+                    <h5 class="me-2 mb-0">Rechercher un client :</h5>
+                </div>
+                <div class="col-md-6">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        class="form-control" 
+                        value="{{ search_query }}" 
+                        placeholder="Rechercher un client">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-outline-secondary">OK</button>
+
+                </div>
+                <div class="col-md-2">
+                <a href="/ajout_client" class="btn btn-success me-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-add icon-white me-1" viewBox="0 0 16 16">
+                        <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                        <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                      </svg>
+                    Ajouter un client</a>
+                </div>
+            </form>
+        </div>
+        </div>
+        <div class="container">
+        <!-- Tableau des clients -->
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Âge</th>
+                    <th>Région</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td>{{ client[0] }}</td>
+                    <td>{{ client[1] }}</td>
+                    <td>{{ client[2] }}</td>
+                    <td>{{ client[3] }}</td>
+                    <td>{{ client[4] }}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                        <div class="nav-item">
+                        <a href="/modifier/{{ client[0] }}" class="btn btn-warning btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square icon-black me-1" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                              </svg>
+                            Modifier</a>
+                        </div>
+
+                          <div class="nav-item">
+
+                       
+                        <a href="/supprimer/{{ client[0] }}" class="btn btn-danger btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash icon-white me-1" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                              </svg>
+                              Supprimer</a>
+                    </div>
+                </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+       
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
